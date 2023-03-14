@@ -1,12 +1,7 @@
 @extends('layout')
 @section('content')
 <div class="features_items"><!--features_items-->
-
-    @foreach($brand_name as $key => $name)
-
-    <h2 class="title text-center">{{ $name->brand_name }}</h2>
-
-    @endforeach
+    <h2 class="title text-center">Sản phẩm khuyến mãi</h2>
     <div class="row" style="padding-bottom: 15px">
         <div class="col-md-4">
             <label for="amount">Sắp xếp theo</label>
@@ -34,20 +29,12 @@
             </form>
         </div>
     </div>
-    @foreach($brand_by_id as $key =>$product)
-    <a href="{{URL::to ('/chi-tiet-san-pham/'.$product->product_id) }}">
+    @foreach($all_product as $key =>$product)
+    {{-- <a href="{{URL::to ('/chi-tiet-san-pham/'.$product->product_id) }}"> --}}
     <div class="col-sm-4">
         <div class="product-image-wrapper">
             <div class="single-products">
                     <div class="productinfo text-center">
-                        {{-- <img src="{{URL::to ('public/uploads/product/'.$product->product_image) }}" alt="" />
-                        <h2>{{number_format($product->product_price).' VNĐ' }}</h2>
-                        <p>{{ $product->product_name }}</p> --}}
-                        {{-- <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a> --}}
-                        {{-- <button type="submit" class="btn btn-fefault cart">
-                            <i class="fa fa-shopping-cart"></i>
-                            Thêm giỏ hàng
-                        </button> --}}
                         <form style="height: 390px">
                             @csrf
                         <input type="hidden" name="" value="{{ $product->product_id }}" class="cart_product_id_{{ $product->product_id }}">
@@ -69,6 +56,14 @@
                         <button type="button" class="btn btn-default add-to-cart" name="add-to-cart" data-id_product="{{ $product->product_id }}">Thêm giỏ hàng</button>
                         </form>
                     </div>
+                    
+                    {{-- <div class="product-overlay">
+                        <div class="overlay-content">
+                            <h2>$56</h2>
+                            <p>Easy Polo Black Edition</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    </div> --}}
             </div>
             {{-- <div class="choose">
                 <ul class="nav nav-pills nav-justified">
@@ -76,9 +71,9 @@
                     <li><a href="#"><i class="fa fa-plus-square"></i>So sánh</a></li>
                 </ul>
             </div> --}}
-        </div> 
+        </div>
     </div>
-    </a>
+    
     @endforeach
 </div><!--features_items-->
 </div><!--/recommended_items-->

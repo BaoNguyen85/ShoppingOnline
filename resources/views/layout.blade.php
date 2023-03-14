@@ -152,7 +152,7 @@
 								?>
 								{{-- <li style="list-style: none"> --}}
 									
-									<img width="5%" src="{{ Session::get('customer_picture') }}"><a style="color: #ffffff">{{ Session::get('customer_name') }}</a> &emsp;
+									<img width="5%" src="{{ Session::get('customer_picture') }} "><a style="color: #ffffff">{{ Session::get('customer_name') }}</a> &emsp;
 									<a style="color: #ffffff" href="{{ URL::to('/logout-checkout') }}"><i class="fa fa-sign-out"></i> Đăng xuất</a> 
 								{{-- </li> --}}
 								&emsp;
@@ -188,16 +188,19 @@
 						<div style="padding-top: 8px" class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a style="color: #ffffff" href="{{URL::to('/trang-chu') }}" class="active">Trang chủ</a></li>
-								<li class="dropdown"><a style="color: #ffffff" href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
+								{{-- <li class="dropdown"><a style="color: #ffffff" href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
 										<ul role="menu" class="sub-menu">
-											{{-- @foreach($cate_product as $key => $cate_pro )
-												<li><a href="{{ URL::to('/chi-tiet-san-pham/'.$cate_pro->cate_post_slug) }}">{{ $cate_pro->product_id }}</a></li>
-											@endforeach --}}
+											@foreach($cate_product as $key => $sanpham )
+												<li><a href="{{ URL::to('/chi-tiet-san-pham/'.$sanpham->cate_post_slug) }}">{{ $sanpham->product_id }}</a></li>
+											@endforeach
+											
+											
 										</ul>
                                         
                                     </ul>
-                                </li> 
+                                </li>  --}}
+								<li><a style="color: #ffffff" href="{{ URL::to('/san-pham-khuyen-mai') }}">Khuyến mãi</a></li>
 								<li class="dropdown"><a style="color: #ffffff" href="">Tin tức<i class="fa fa-angle-down"></i></a>
 									<ul role="menu" class="sub-menu">
                                         @foreach($category_post as $key => $danhmucbaiviet )
@@ -493,12 +496,12 @@
 		$('.send_order').click(function(){
 			swal({
 				title: "Xác nhận đơn hàng",
-				text: "Đơn hàng sẽ không được hoàn trả khi đặt, bạn có muốn đặt không?",
+				text: "Đồng ý đặt hàng?",
 				type: "warning",
 				showCancelButton: true,
 				confirmButtonClass: "btn-danger",
-				confirmButtonText: "Cảm ơn, Mua hàng",
-				cancelButtonText: "Đóng, chưa mua",
+				confirmButtonText: "Đặt hàng",
+				cancelButtonText: "Đóng",
 				closeOnConfirm: false,
 				closeOnConfirm: false
 			},
@@ -563,32 +566,33 @@
 			var cart_product_id = $('.cart_product_id_' + id).val();
 			var cart_product_name = $('.cart_product_name_' + id).val();
 			var cart_product_image = $('.cart_product_image_' + id).val();
+			var cart_product_quantity = $('.cart_product_quantity_' + id).val();
 			var cart_product_price = $('.cart_product_price_' + id).val();
 			var cart_product_qty = $('.cart_product_qty_' + id).val();
 			var _token = $('input[name="_token"]').val();
-			
-			$.ajax({
-				url: '{{ url('/add-cart-ajax') }}',
-				method: 'POST',
-				data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,
-					cart_product_image:cart_product_image,cart_product_price:cart_product_price,
-					cart_product_qty:cart_product_qty,_token:_token},
-				success:function(data){
-					swal({
-						title: "Đã thêm sản phẩm vào giỏ hàng",
-						text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+				
+				$.ajax({
+					url: '{{ url('/add-cart-ajax') }}',
+					method: 'POST',
+					data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,
+						cart_product_image:cart_product_image,cart_product_price:cart_product_price,
+						cart_product_qty:cart_product_qty,_token:_token,cart_product_quantity:cart_product_quantity},
+					success:function(data){
+						swal({
+							title: "Đã thêm sản phẩm vào giỏ hàng",
+							text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
 
-						showCancelButton: true,
-						cancelButtonText: "Xem tiếp",
-						confirmButtonClass: "btn-success",
-						confirmButtonText: "Đi đến giỏ hàng",
-						closeOnConfirm: false
-					},
-					function(){
-						window.location.href = "{{ url('/gio-hang') }}";
-					});
-				}
-			});
+							showCancelButton: true,
+							cancelButtonText: "Xem tiếp",
+							confirmButtonClass: "btn-success",
+							confirmButtonText: "Xem giỏ hàng",
+							closeOnConfirm: false
+						},
+						function(){
+							window.location.href = "{{ url('/gio-hang') }}";
+						});
+					}
+				});
 		});
 	});
 </script>
@@ -640,18 +644,19 @@
 		});
 	});
 </script>
-<script>
+<script type="text/javascript">
 	$(document).ready( function() {
 		$( "#slider-range" ).slider({
 			orientation: "horizontal",
 			range: true,
+
 			min:500000,
 			max:50000000,
 			steps:500000,
-			values: [ 15000000, 30000000 ],
+			values: [ 10000000, 30000000 ],
 			slide: function( event, ui ) {
 			$( "#amount" ).val( "đ" + ui.values[ 0 ] + " - đ" + ui.values[ 1 ] );
-			$( "#strat_price" ).val(ui.values[ 0 ] );
+			$( "#start_price" ).val(ui.values[ 0 ] );
 			$( "#end_price" ).val(ui.values[ 1 ] );
 			}
 		});
@@ -660,5 +665,6 @@
 			" - đ" + $( "#slider-range" ).slider( "values", 1 ) );
 	} );
 </script>
+
 </body>
 </html>

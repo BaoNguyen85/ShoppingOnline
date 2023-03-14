@@ -46,9 +46,9 @@
               <td>{{ $ord -> created_at }}</td>
               <td>
                 @if($ord -> order_status == 1)
-                  Đơn hàng mới
-                @else
-                  Đã xử lý
+                  <p style="color: rgb(6, 146, 20)">Đơn hàng mới</p>
+                @elseif($ord -> order_status == 2)
+                  <p style="color: rgb(21, 26, 183)">Đơn hàng đã xử lý</p>
                 @endif
               </td>
               

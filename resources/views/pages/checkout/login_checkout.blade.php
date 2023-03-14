@@ -2,7 +2,7 @@
 @section('content')
 <section id="form"><!--form-->
     <div class="container">
-        <div class="row" style="background-image: linear-gradient(to bottom right,#4ADEDE, #1CA7EC); margin-right:30%;padding-bottom:3%; padding-top:1%; border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;; padding-left:7%;">
+        <div class="row" style="background-image: linear-gradient(to bottom right,#4ADEDE, #1CA7EC); margin-right:30%;padding-bottom:3%; padding-top:1%; border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;; padding-left:5%;">
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="login-form"><!--login form-->
                     <h2>Đăng nhập tài khoản</h2>

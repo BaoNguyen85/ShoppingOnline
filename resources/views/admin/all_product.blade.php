@@ -6,7 +6,7 @@
         Liệt kê sản phẩm
       </div>
       <div class="row w3-res-tb">
-        <div class="col-sm-5 m-b-xs">
+        {{-- <div class="col-sm-5 m-b-xs">
           <select class="input-sm form-control w-sm inline v-middle">
             <option value="0">Bulk action</option>
             <option value="1">Delete selected</option>
@@ -24,7 +24,7 @@
               <button class="btn btn-sm btn-default" type="button">Go!</button>
             </span>
           </div>
-        </div>
+        </div> --}}
       </div>
       <div class="table-responsive">
         <?php
@@ -43,8 +43,10 @@
                 </label>
               </th>
               <th>Tên sản phẩm</th>
+              <th>Số lượng</th>
               <th>Slug</th>
-              <th>Giá</th>
+              <th>Giá bán</th>
+              <th>Giá gốc</th>
               <th>Hình ảnh sản phẩm</th>
               <th>Danh mục</th>
               <th>Thương hiệu</th>
@@ -57,8 +59,10 @@
             <tr>
               <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
               <td>{{ $pro -> product_name }}</td>
+              <td>{{ $pro -> product_quantity }}</td>
               <td>{{ $pro -> product_slug }}</td>
-              <td>{{ $pro -> product_price }}</td>
+              <td>{{ number_format($pro -> product_price,0,',','.') }}đ</td>
+              <td>{{ number_format($pro -> price_cost,0,',','.') }}đ</td>
               <td><img src="public/uploads/product/{{ $pro -> product_image }}" height="100" width="100"></td>
               <td>{{ $pro -> category_name }}</td>
               <td>{{ $pro -> brand_name }}</td>

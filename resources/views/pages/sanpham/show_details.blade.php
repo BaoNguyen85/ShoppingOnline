@@ -3,7 +3,7 @@
 @foreach($product_details as $key => $value)
 <div class="product-details"><!--product-details-->
     <div class="col-sm-5">
-        <div class="view-product">
+        <div class="view-product" style="padding-top: 50px">
             <img src="{{URL::to ('/public/uploads/product/'.$value->product_image) }}" alt="" />
             <h3 style="border-radius: 10px 0 0 0;background-image: linear-gradient(to bottom right,#D46C4E, #F9AD6A);">NEW</h3>
         </div>
@@ -37,6 +37,12 @@
             
             <form action="{{ URL::to('/save-cart') }}" method="POST">
                 {{ csrf_field() }}
+                <input type="hidden" name="" value="{{ $value->product_id }}" class="cart_product_id_{{ $value->product_id }}">
+                        <input type="hidden" name="" value="{{ $value->product_name }}" class="cart_product_name_{{ $value->product_id }}">
+                        <input type="hidden" name="" value="{{ $value->product_image }}" class="cart_product_image_{{ $value->product_id }}">
+                        <input type="hidden" name="" value="{{ $value->product_quantity }}" class="cart_product_quantity_{{ $value->product_id }}">
+                        <input type="hidden" name="" value="{{ $value->product_price }}" class="cart_product_price_{{ $value->product_id }}">
+                        <input type="hidden" name="" value="1" class="cart_product_qty_{{ $value->product_id }}">
             <span>
                 <span>{{number_format($value->product_price).' VNĐ'}}</span>
                 <br>
@@ -44,10 +50,11 @@
                 <input name="qty" type="number" min="1" value="1" />
                 <input name="productid_hidden" type="hidden" value="{{ $value->product_id }}" />
                 <br><br>
-                <button type="submit" class="btn btn-fefault cart">
+                {{-- <button type="submit" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
                     Thêm giỏ hàng
-                </button>
+                </button> --}}
+                <button type="button" class="btn btn-default add-to-cart" name="add-to-cart" data-id_product="{{ $value->product_id }}">Thêm giỏ hàng</button>
             </span>
             </form>
             <p><b>Tình trạng:</b> Còn hàng</p>
@@ -98,6 +105,7 @@
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input required type="email" class="form-control" id="email" name="email">
+                            
                         </div>
                         <div class="form-group">
                             <label for="name">Tên:</label>
@@ -132,7 +140,7 @@
             <li class="com-title">
                 {{ $comment->com_name }}
                 <br>
-                <span>{{ date('d/m/Y H:i',strtotime($comment->created_at)) }}</span>
+                <span>{{ date('d-m-Y H:i',strtotime($comment->created_at)) }}</span>
             </li>
             <li class="com-details">
                 {{ $comment->com_content }}

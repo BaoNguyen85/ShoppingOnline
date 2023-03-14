@@ -104,10 +104,12 @@
                 </label>
               </th>
               <th>Tên sản phẩm</th>
+              <th>Số lượng kho còn</th>
               <th>Mã giảm giá</th>
               <th>Phí ship</th>
               <th>Số lượng</th>
-              <th>Giá sản phẩm</th>
+              <th>Giá bán</th>
+              <th>Giá gốc</th>
               <th>Tổng tiền</th>
               <th style="width:30px;"></th>
             </tr>
@@ -123,10 +125,11 @@
               $subtotal = $details->product_price*$details->product_sales_quantity;
               $total += $subtotal;
               @endphp
-            <tr>
+            <tr class="color_qty_{{ $details->product_id }}">
             
               <td><i>{{ $i }}</i></label></td>
               <td>{{ $details->product_name }}</td>
+              <td>{{ $details->product->product_quantity }}</td>
               <td>
                 @if($details->product_coupon!='no')
                   {{ $details->product_coupon }}
@@ -135,8 +138,17 @@
                 @endif
               <td>{{number_format ($details->product_feeship,0,',','.') }}đ</td>
               </td>
-              <td>{{ $details->product_sales_quantity }}</td>
+              <td>
+                <input type="number" min="1" {{ $order_status==2 ? 'disabled' : ''}} class="order_qty_{{ $details->product_id }}" value="{{ $details->product_sales_quantity }}" name="product_sales_quantity">
+                <input type="hidden" name="order_qty_storage" class="order_qty_storage_{{ $details->product_id }}" value="{{ $details->product->product_quantity }}">
+                <input type="hidden" name="order_code" class="order_code" value="{{ $details->order_code }}">
+                <input type="hidden" name="order_product_id" class="order_product_id" value="{{ $details->product_id }}">
+                @if($order_status!=2)
+                <button class="btn btn-default update_quantity_order" data-product_id="{{ $details->product_id }}" name="update_quantity_order" >Cập nhật</button>
+                @endif
+              </td>
               <td>{{number_format ($details->product_price,0,',','.') }}đ</td>
+              <td>{{number_format ($details->product->price_cost,0,',','.') }}đ</td>
               <td>{{number_format ($subtotal,0,',','.') }}đ</td>
             </tr>
             @endforeach
@@ -163,7 +175,31 @@
                 Thanh toán: {{number_format ($total_coupon,0,',','.') }}đ
               </td>
             </tr>
-            
+            <tr>
+              <td colspan="6">
+                @foreach($order as $key => $or)
+                  @if($or->order_status==1)
+                  <form>
+                    @csrf
+                    <select class="form-control order_details">
+                      <option value="">---Chọn hình thức đơn hàng---</option>
+                      <option id="{{ $or->order_id }}" value="1" selected>Chưa xử lý</option>
+                      <option id="{{ $or->order_id }}" value="2">Đã xử lý - Đã giao hàng</option>
+                    </select>
+                  </form>
+                  @else
+                  @csrf
+                  <form>
+                    <select class="form-control order_details">
+                      <option value="">---Chọn hình thức đơn hàng---</option>
+                      <option disabled id="{{ $or->order_id }}" value="1">Chưa xử lý</option>
+                      <option id="{{ $or->order_id }}" value="2" selected>Đã xử lý - Đã giao hàng</option>
+                    </select>
+                  </form>
+                  @endif
+                @endforeach
+              </td>
+            </tr>
           </tbody>
         </table>
         <a target="_blank" href="{{ url('print-order/'.$details->order_code) }}">In đơn hàng</a>

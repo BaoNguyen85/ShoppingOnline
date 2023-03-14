@@ -6,7 +6,7 @@
         Liệt kê danh mục sản phẩm
       </div>
       <div class="row w3-res-tb">
-        <div class="col-sm-5 m-b-xs">
+        {{-- <div class="col-sm-5 m-b-xs">
           <select class="input-sm form-control w-sm inline v-middle">
             <option value="0">Bulk action</option>
             <option value="1">Delete selected</option>
@@ -24,7 +24,7 @@
               <button class="btn btn-sm btn-default" type="button">Go!</button>
             </span>
           </div>
-        </div>
+        </div> --}}
       </div>
       <div class="table-responsive">
         <?php
@@ -43,7 +43,8 @@
                 </label>
               </th>
               <th>Tên danh mục</th>
-              <th>Thuộc danh mục</th>
+              {{-- <th>Thuộc danh mục</th> --}}
+              <th></th>
               <th>Slug</th>
               <th>Hiển thị</th>
               

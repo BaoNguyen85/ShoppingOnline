@@ -23,12 +23,20 @@
                             <input type="text" name="product_name" class="form-control" id="exampleInputEmail1" value="{{ $pro->product_name }}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Slug</label>
-                            <input type="text" name="product_slug" class="form-control" id="exampleInputEmail1" value="{{ $pro->product_slug }} placeholder="Slug">
+                            <label for="exampleInputEmail1">Số lượng sản phẩm</label>
+                            <input type="text" name="product_quantity" class="form-control" id="exampleInputEmail1" value="{{ $pro->product_quantity }}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Giá sản phẩm</label>
+                            <label for="exampleInputEmail1">Slug</label>
+                            <input type="text" name="product_slug" class="form-control" id="exampleInputEmail1" value="{{ $pro->product_slug }}" placeholder="Slug">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Giá bán</label>
                             <input type="text" value="{{ $pro->product_price }}" name="product_price" class="form-control" id="exampleInputEmail1" >
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Giá gốc</label>
+                            <input type="text" value="{{ $pro->price_cost }}" name="price_cost" class="form-control" id="exampleInputEmail1" >
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Hình ảnh sản phẩm</label>

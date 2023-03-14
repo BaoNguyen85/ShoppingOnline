@@ -4,7 +4,7 @@
     <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                    Thêm thông tin website
+                    Thông tin website
                 </header>               
                 <div class="panel-body">
                     <?php
