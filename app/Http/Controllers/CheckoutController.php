@@ -59,7 +59,11 @@ class CheckoutController extends Controller
         $order->order_status = 1;
         $order->order_code = $checkout_code;
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $order->created_at = now();
+        $today = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+        $order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        // $order->created_at = now();
+        $order->created_at = $today;
+        $order->order_date = $order_date;
         $order->save();
 
         

@@ -191,8 +191,8 @@ class CategoryProduct extends Controller
         $category_by_id = DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
         ->where('tbl_category_product.category_id',$category_id)->get();
 
-        // $min_price = Product::min('product_price');
-        // $max_price = Product::max('product_price');
+        $min_price = Product::min('product_price');
+        $max_price = Product::max('product_price');
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
 
@@ -237,8 +237,8 @@ class CategoryProduct extends Controller
         return view('pages.category.show_category')->with('category',$cate_product)->with('brand',$brand_product)->with('category_by_id',$category_by_id)
         ->with('category_name',$category_name)
         ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)
-        ->with('category_post',$category_post)->with('slider',$slider);
-        // ->with('min_price',$min_price)->with('max_price',$max_price);
+        ->with('category_post',$category_post)->with('slider',$slider)
+        ->with('min_price',$min_price)->with('max_price',$max_price);
     }
     
     

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
 use App\Models\CatePost;
 use App\Models\Slider;
+use App\Models\Product;
 session_start();
 
 class HomeController extends Controller
@@ -68,7 +69,8 @@ class HomeController extends Controller
         // ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')
         // ->orderby('tbl_product.product_id','desc')->get();
         $all_product = DB::table('tbl_product')->where('product_status','0')->orderBy('product_id','desc')->limit(4)->get();
-
+        $min_price = Product::min('product_price');
+        $max_price = Product::max('product_price');
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
 
@@ -90,7 +92,8 @@ class HomeController extends Controller
 
         return view('pages.home')->with('category',$cate_product)->with('brand',$brand_product)->with('all_product',$all_product)
         ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)
-        ->with('category_post',$category_post)->with('slider',$slider);
+        ->with('category_post',$category_post)->with('slider',$slider)
+        ->with('min_price',$min_price)->with('max_price',$max_price);
     }
     public function search(Request $request){
         $slider = Slider::orderby('slider_id','DESC')->where('slider_status','1')->take(4)->get();
@@ -113,5 +116,25 @@ class HomeController extends Controller
         return view('pages.sanpham.search')->with('category',$cate_product)->with('brand',$brand_product)->with('search_product',$search_product)
         ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)
         ->with('category_post',$category_post)->with('slider',$slider);
+    }
+    public function khuyenmai(Request $request){
+        $slider = Slider::orderby('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+
+        //seo
+        $meta_desc = "Sản phẩm khuyến mãi";
+        $meta_keywords = "Sản phẩm khuyến mãi";
+        $meta_title = "Sản phẩm khuyến mãi";
+        $url_canonical = $request->url();
+
+        //--seo
+        $keywords = $request->keywords_submit;
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $all_product = DB::table('tbl_product')->where('product_status','0')->orderBy('product_id','desc')->limit(4)->get();
+        return view('pages.sanpham.khuyenmai')->with('category',$cate_product)->with('brand',$brand_product)
+        ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)
+        ->with('category_post',$category_post)->with('slider',$slider)->with('all_product',$all_product);
     }
 }

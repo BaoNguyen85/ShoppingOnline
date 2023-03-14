@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\CatePost;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 session_start();
 
 class BrandProduct extends Controller
@@ -104,6 +105,9 @@ class BrandProduct extends Controller
         $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
         ->where('tbl_product.brand_id',$brand_id)->get();
 
+        $min_price = Product::min('product_price');
+        $max_price = Product::max('product_price');
+
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
 
@@ -139,6 +143,7 @@ class BrandProduct extends Controller
         return view('pages.brand.show_brand')->with('category',$cate_product)->with('brand',$brand_product)->with('brand_by_id',$brand_by_id)
         ->with('brand_name',$brand_name)
         ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)
-        ->with('category_post',$category_post)->with('slider',$slider);
+        ->with('category_post',$category_post)->with('slider',$slider)
+        ->with('min_price',$min_price)->with('max_price',$max_price);
     }
 }

@@ -54,8 +54,10 @@ class ProductController extends Controller
         $this->AuthLogin();
         $data = array();
         $data['product_name'] = $request->product_name;
+        $data['product_quantity'] = $request->product_quantity;
         $data['product_slug'] = $request->product_slug;
         $data['product_price'] = $request->product_price;
+        $data['price_cost'] = $request->price_cost;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
         $data['category_id'] = $request->product_cate;
@@ -107,8 +109,10 @@ class ProductController extends Controller
         $this->AuthLogin();
         $data = array();
         $data['product_name'] = $request->product_name;
+        $data['product_quantity'] = $request->product_quantity;
         $data['product_slug'] = $request->product_slug;
         $data['product_price'] = $request->product_price;
+        $data['price_cost'] = $request->price_cost;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
         $data['category_id'] = $request->product_cate;

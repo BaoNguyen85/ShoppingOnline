@@ -15,6 +15,6 @@ class Post extends Model
     protected $table = 'tbl_posts';
 
     public function cate_post(){
-        return $this->belongsTo('App\Models\CatePost');
+        return $this->belongsTo('App\Models\CatePost','cate_post_id');
     }
 }
